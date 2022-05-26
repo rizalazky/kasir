@@ -38,7 +38,8 @@ $routes->group('admin', function ($routes) {
     $routes->get('/','Admin/Product::index');
     $routes->get('product', 'Admin\Product::index');
     $routes->post('product', 'Admin\Product::store');
-    $routes->get('product/delete/(:id)', 'Admin\Product::deleteproduct');
+    $routes->post('product/edit', 'Admin\Product::store');
+    $routes->get('product/delete/(:id)', 'Admin\Product::delete');
 
 
     $routes->add('login', 'Admin\Login::index');

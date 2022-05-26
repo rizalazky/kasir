@@ -99,9 +99,12 @@
                     <label for="exampleFormControlInput1" class="form-label">Price</label>
                     <input type="text" class="form-control" id="product_price" placeholder="">
                 </div>
+                <img id="previewImg" class="img-fluid" src="//www.tutsmake.com/ajax-image-upload-with-preview-in-codeigniter/" alt="your image" /></br></br>
+                <!-- <input type="file" name="file" multiple="true" accept="image/*" id="finput" onchange="readURL(this);"></br></br> -->
+
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Image</label>
-                    <input type="file" class="form-control" id="product_image" placeholder="">
+                    <input type="file" class="form-control" accept="image/*" id="product_image" placeholder="">
                 </div>
             </div>
             <div class="modal-footer">
@@ -118,6 +121,26 @@
     <!-- <script src="<?= base_url('js/select2.full.js') ?>"></script> -->
     <script>
         $(document).ready(function(){
+
+            
+            function previewImage(input){
+                var file = $("#product_image").get(0).files[0];
+        
+                if(file){
+                    var reader = new FileReader();
+        
+                    reader.onload = function(){
+                        $("#previewImg").attr("src", reader.result);
+                    }
+        
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            $('#product_image').change(function(e){
+               
+                previewImage($(this));
+            })
             
             function matchStart(params, data) {
                 // If there are no search terms, return all of the data
@@ -173,6 +196,8 @@
                             text: response.message,
                             icon: 'success',
                             confirmButtonText: 'Cool'
+                        }).then(()=>{
+                            window.location.reload();
                         });
                     }else{
                         let msg ='';
@@ -186,6 +211,7 @@
                             confirmButtonText: 'Cool'
                         });
                     }
+                   
                 }).catch(err=>{
                    console.log(err)
                 })
@@ -193,15 +219,19 @@
 
             function deleteData(url){
                 $.ajax({
-                    type: "DELETE",
-                    url:url
+                    type: "GET",
+                    url:url,
+                    dataType: 'json'
                 }).then((response)=>{
+                    console.log(response)
                     if(response.status){
                         Swal.fire(
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
-                        )
+                        ).then(()=>{
+                            window.location.reload();
+                        })
                     }
                 }).catch(err=>{
                    console.log(err)
@@ -247,8 +277,9 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        let url =  "<?php echo base_url('admin/product/') ?>/"+id;
+                        let url =  "<?php echo base_url('admin/product/delete') ?>/"+id;
                         deleteData(url)
+                        
                     }
                 })
 

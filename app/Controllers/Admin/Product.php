@@ -91,13 +91,12 @@ class Product extends BaseController
         return json_encode($response);
     }
 
-    public function deleteproduct($id){
+    public function delete($id){
         $productsModel = new ProductModel();
         $productsModel->delete($id);
         $response = [
             "status" => true,
-            "message" => "Succes Delete Product",
-            "data" => $data
+            "message" => "Succes Delete Product"
         ];
 
         return json_encode($response);

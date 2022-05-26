@@ -1,38 +1,36 @@
-<?= $this->extend('admin/layouts/layout') ?>
+    <?= $this->extend('admin/layouts/layout') ?>
     <?= $this->section('content') ?>
 
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add Categories
+        </button>
+
+        <?= $this->include('admin/category/modal') ?>
         <table class="table table-responsive">
             <thead>
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Categories</th>
-                <th scope="col">Price</th>
-                <th scope="col">Description</th>
+                <th scope="col">Category Name</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    foreach($products as $product){
+                    foreach($categories as $category){
                 ?>
                     <tr>
-                        <td><?= $product['id'] ;?></td>
-                        <td><?= $product['product_name'] ;?></td>
-                        <td><?= $product['category_id'] ;?></td>
-                        <td><?= $product['product_price'] ;?></td>
-                        <td><?= $product['product_desc'] ;?></td>
+                        <td><?= $category['id'] ;?></td>
+                        <td><?= $category['category_name'] ;?></td>
                         <td>
                             <button 
-                            class='btn btn-primary btn-sm'
-                            data-id='<?= $product['id'] ;?>'
-                            data-product_name='<?= $product['product_name'] ;?>'
-                            data-category_id='<?= $product['category_id'] ;?>'
-                            data-product_desc='<?= $product['product_desc'] ;?>'
+                            class='btn btn-primary btn-sm btn-edit-category'
+                            data-id='<?= $category['id'] ;?>'
+                            data-category_name='<?= $category['category_name'] ;?>'
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
                             >
                                 Edit
                             </button>
-                            <button class='btn btn-danger btn-sm btn-delete' data-id='<?= $product['id'] ;?>'>
+                            <button class='btn btn-danger btn-sm btn-delete-category' data-id='<?= $category['id'] ;?>'>
                                 Delete
                             </button>
                         </td>

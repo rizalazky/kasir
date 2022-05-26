@@ -11,6 +11,7 @@ class Product extends BaseController
         $productsModel = new ProductModel();
         $data['products'] = $productsModel->paginate(10);
         $data['pager'] = $productsModel->pager;
+        $data['pageTitle'] = 'Products';
 
         return view('admin/product/index',$data);
     }

@@ -7,7 +7,7 @@
     
     <div id="content">
         <div class="container my-5">
-            <h2 class="h2">Products</h2>
+            <h2 class="h2"><?= $pageTitle ?></h2>
             
             <?= $this->renderSection('content') ?>
     
@@ -15,6 +15,8 @@
             
         </div>
     </div>
+    
+
 
 <?= $this->include('admin/layouts/foot') ?>
    

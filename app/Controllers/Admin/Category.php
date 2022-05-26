@@ -2,55 +2,92 @@
 
 namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
-use App\Models\ProductModel;
+use App\Models\CategoryModel;
 
-class Product extends BaseController
+class Category extends BaseController
 {
     public function index()
     {
         $pager = \Config\Services::pager();
 
         $categoryModel = new CategoryModel();
-        $data['products'] = $productsModel->paginate(10);
-        $data['pager'] = $productsModel->pager;
+        $data['categories'] = $categoryModel->paginate(10);
+        $data['pager'] = $categoryModel->pager;
+        $data['pageTitle'] = 'Categories';
 
-        return view('admin/categoy/index',$data);
+        return view('admin/category/index',$data);
     }
 
     public function store(){
         $validation =  \Config\Services::validation();
         $validation->setRules([
-            'product_name' => ['label'=>'Product Name','rules'=>'required'],
-            'product_price' => ['label'=>'Product Price','rules'=>'required'],
-            'product_desc' => ['label'=>'Product Description','rules'=>'required'],
-            'category_id' => ['label'=>'Category','rules'=>'required'],
+            'category_name' => ['label'=>'Category Name','rules'=>'required|is_unique[categories.category_name]']
         ]);
         $response;
         $isDataValid = $validation->withRequest($this->request)->run();
         if($isDataValid){
             $data =[
-                "product_name" =>$this->request->getPost("product_name"),
-                "product_price" =>$this->request->getPost("product_price"),
-                "product_desc" =>$this->request->getPost("product_desc"),
-                "category_id" =>$this->request->getPost("category_id")
+                "category_name" =>$this->request->getPost("category_name")
             ];
 
             $response = [
                 "status" => true,
-                "message" => "Succes Create Product",
+                "message" => "Succes Create Category",
                 "data" => $data
             ];
 
-            $productsModel = new ProductModel;
+            $productsModel = new CategoryModel;
             $productsModel->save($data);
         }else{
             $response = [
                 "status" => false,
-                "message" => "Failed Create Product",
+                "message" => "Failed Create Category",
                 "data" => $validation->getErrors()
             ];
         }
         
+        return json_encode($response);
+    }
+
+    public function edit($id){
+        $validation =  \Config\Services::validation();
+        $validation->setRules([
+            'category_name' => ['label'=>'Category Name','rules'=>'required|is_unique[categories.category_name]']
+        ]);
+        $response;
+        $isDataValid = $validation->withRequest($this->request)->run();
+        if($isDataValid){
+            $data =[
+                "category_name" =>$this->request->getPost("category_name")
+            ];
+
+            $response = [
+                "status" => true,
+                "message" => "Succes Update Category",
+                "data" => $data
+            ];
+
+            $productsModel = new CategoryModel;
+            $productsModel->update($id,$data);
+        }else{
+            $response = [
+                "status" => false,
+                "message" => "Failed Update Category",
+                "data" => $validation->getErrors()
+            ];
+        }
+        
+        return json_encode($response);
+    }
+
+    public function delete($id){
+        $categoryModel = new CategoryModel();
+        $categoryModel->delete($id);
+        $response = [
+            "status" => true,
+            "message" => "Succes Delete Category"
+        ];
+
         return json_encode($response);
     }
 }

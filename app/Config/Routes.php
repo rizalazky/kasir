@@ -38,12 +38,12 @@ $routes->group('admin', function ($routes) {
     $routes->get('/','Admin/Product::index');
     $routes->get('product', 'Admin\Product::index');
     $routes->post('product', 'Admin\Product::store');
-    $routes->post('product/edit', 'Admin\Product::store');
+    $routes->post('product/edit/(:id)', 'Admin\Product::store');
     $routes->get('product/delete/(:id)', 'Admin\Product::delete');
 
-    $routes->get('category', 'Admin\Product::index');
+    $routes->get('category', 'Admin\Category::index');
     $routes->post('category', 'Admin\Category::store');
-    $routes->post('category/edit', 'Admin\Category::store');
+    $routes->post('category/edit/(:id)', 'Admin\Category::edit');
     $routes->get('category/delete/(:id)', 'Admin\Category::delete');
 
 

@@ -1,8 +1,21 @@
 $(document).ready(function(){
     
 
+    // reset form input when modal closed
+    $('#exampleModal').on('hidden.bs.modal',function(){
+        console.log("Hide Modal")
+        $('input').val();
+        let inputElement = document.getElementsByTagName('input');
 
-    function previewImage(input){
+        console.log(inputElement);
+        for (let index = 0; index < inputElement.length; index++) {
+            const inp = inputElement[index];
+            inp.value = '';
+        }
+    })
+
+
+    function previewImage(){
         var file = $("#product_image").get(0).files[0];
 
         if(file){
@@ -17,7 +30,6 @@ $(document).ready(function(){
     }
 
     $('#product_image').change(function(e){
-       
         previewImage($(this));
     })
     
@@ -117,7 +129,8 @@ $(document).ready(function(){
         })
     }
 
-    function addData(){
+
+    $('#btn-save').click(async function(){
         let product_name = $('#product_name').val();
         let category_id = $('#category_id').val();
         let product_price = $('#product_price').val();
@@ -130,12 +143,12 @@ $(document).ready(function(){
             product_desc,
             product_image
         }
-        let url =  "<?php echo base_url('admin/product') ?>";
+        let url =  baseUrl+"/admin/product";
        
         postData(url,data);
         
         
-    }
+    });
 
     $('#btn-save').click(async function(){
         addData();
@@ -156,7 +169,57 @@ $(document).ready(function(){
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                let url =  "<?php echo base_url('admin/product/delete') ?>/"+id;
+                let url =  baseUrl+"/admin/product/delete/"+id;
+                deleteData(url)
+                
+            }
+        })
+
+    })
+
+    $('#btn-save-category').click(async function(){
+        let id = $('#id').val();
+        let category_name = $('#category_name').val();
+        
+        let url =  baseUrl+"/admin/category";
+        let data = {
+            category_name,  
+        }
+
+        if(id !== '' && id !== null){
+            data.id = id;
+            url = url+ "/edit/"+id
+        }
+
+        console.log(data)
+
+        console.log(url)
+       
+        postData(url,data);
+    });
+
+    $('.btn-edit-category').click(function(){
+        let id=$(this).data('id');
+        let categoryName=$(this).data('category_name');
+        $('#id').val(id);
+        $('#category_name').val(categoryName);
+    });
+
+    $('.btn-delete-category').click(function(){
+
+        let id = $(this).data('id')
+        console.log(id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let url =  baseUrl+"/admin/category/delete/"+id;
                 deleteData(url)
                 
             }

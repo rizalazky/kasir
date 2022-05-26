@@ -7,5 +7,6 @@
     <div class="sidebar-menu">
         <a href="<?= base_url('admin/category')?>">Categories</a>
         <a href="<?= base_url('admin/product')?>">Products</a>
+        <a href="<?= base_url('admin/logout')?>">Logout</a>
     </div>
 </div>

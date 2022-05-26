@@ -33,7 +33,11 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->group('admin', function ($routes) {
+$routes->get('/admin/login', 'Admin\Login::index');
+$routes->post('/admin/login', 'Admin\Login::login');
+$routes->add('/admin/logout', 'Admin\Login::logout');
+
+$routes->group('admin',['filter' => 'auth'] ,function ($routes) {
     // product route
     $routes->get('/','Admin/Product::index');
     $routes->get('product', 'Admin\Product::index');
@@ -46,9 +50,6 @@ $routes->group('admin', function ($routes) {
     $routes->post('category/edit/(:id)', 'Admin\Category::edit');
     $routes->get('category/delete/(:id)', 'Admin\Category::delete');
 
-
-    $routes->add('login', 'Admin\Login::index');
-    $routes->add('logout', 'Admin\Login::index');
 });
 
 /*

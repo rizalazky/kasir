@@ -10,7 +10,7 @@ class UsersSeeder extends Seeder
     {
         $data = [
             'username' => 'admin',
-            'password'    => '12345',
+            'password'    => password_hash('12345',PASSWORD_DEFAULT),
             'name' => 'Admin',
             'adress' => 'admin adress'
         ];

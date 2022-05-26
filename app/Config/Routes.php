@@ -41,6 +41,11 @@ $routes->group('admin', function ($routes) {
     $routes->post('product/edit', 'Admin\Product::store');
     $routes->get('product/delete/(:id)', 'Admin\Product::delete');
 
+    $routes->get('category', 'Admin\Product::index');
+    $routes->post('category', 'Admin\Category::store');
+    $routes->post('category/edit', 'Admin\Category::store');
+    $routes->get('category/delete/(:id)', 'Admin\Category::delete');
+
 
     $routes->add('login', 'Admin\Login::index');
     $routes->add('logout', 'Admin\Login::index');

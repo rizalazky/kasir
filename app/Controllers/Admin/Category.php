@@ -10,11 +10,11 @@ class Product extends BaseController
     {
         $pager = \Config\Services::pager();
 
-        $productsModel = new ProductModel();
+        $categoryModel = new CategoryModel();
         $data['products'] = $productsModel->paginate(10);
         $data['pager'] = $productsModel->pager;
 
-        return view('admin/product/index',$data);
+        return view('admin/categoy/index',$data);
     }
 
     public function store(){

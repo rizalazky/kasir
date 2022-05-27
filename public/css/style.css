@@ -39,7 +39,7 @@
       width: 100%;
       height: auto;
       position: fixed;
-      z-index: 1;
+      z-index: 99;
       padding: 0;
     }
     .sidebar-menu{
@@ -53,6 +53,9 @@
     }
     .sidebar a {float: left;padding: 10px;}
     #content {margin-left: 0;}
+    .navbar{
+      z-index: 0;
+    }
   }
   
   /* @media screen and (max-width: 400px) {

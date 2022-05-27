@@ -32,9 +32,6 @@ class Product extends BaseController
         $builder->join('categories', 'categories.id = products.category_id');
         $data['products'] = $builder->get($perPage,$offset)->getResult();
 
-
-       
-
         $total = count($productsModel->findAll());
        
         $pager->makeLinks($page+1,$perPage,$total);
@@ -47,10 +44,10 @@ class Product extends BaseController
         return view('admin/product/index',$data);
     }
 
-    public function upload()
+    public function upload($img)
     {
         
-        $img = $this->request->getFile('product_image');
+        // $img = $this->request->getFile('product_image');
 
         if (!$img->hasMoved()) {
             $newName = $img->getRandomName();
@@ -66,7 +63,7 @@ class Product extends BaseController
         } else {
             $data = [
                 'status'=> false,
-                'errors' => 'The file has already been moved.'
+                'data' => ['errors'=>'The file has already been moved.']
             ];
 
             return  $data;
@@ -135,12 +132,23 @@ class Product extends BaseController
         $response;
         $isDataValid = $validation->withRequest($this->request)->run();
         if($isDataValid){
+
             $data =[
                 "product_name" =>$this->request->getPost("product_name"),
                 "product_price" =>$this->request->getPost("product_price"),
                 "product_desc" =>$this->request->getPost("product_desc"),
-                "category_id" =>$this->request->getPost("category_id")
+                "category_id" =>$this->request->getPost("category_id"),
             ];
+
+            if($this->request->getFile('product_image')){
+                $uploadImage = $this->upload($this->request->getFile('product_image'));
+
+                if(!$uploadImage){
+                    return json_encode($uploadImage);
+                }
+                $data['product_image'] = $uploadImage['name_file'];
+            }
+            
 
             $response = [
                 "status" => true,
@@ -150,7 +158,7 @@ class Product extends BaseController
 
             $productsModel = new ProductModel;
             try {
-                //code...
+                
                 $productsModel->update($id,$data);
             } catch (\Throwable $th) {
                 //throw $th;

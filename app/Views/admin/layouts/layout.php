@@ -5,7 +5,7 @@
     <?= $this->include('admin/layouts/sidebar') ?>
     <?= $this->include('admin/layouts/navbar') ?>
     
-    <div id="content">
+    <div id="content" class="my-4">
         <div class="container my-5">
             <h2 class="h2"><?= $pageTitle ?></h2>
             

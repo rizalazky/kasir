@@ -199,8 +199,11 @@ $(document).ready(function(){
         let product_name = $('#product_name').val();
         let category_id = $('#category_id').val();
         let product_price = $('#product_price').val();
-        let product_desc = $('#product_desc').val();
+        let product_desc = productDescEditor.getData() || $('#product_desc').val();
         let product_image = $('#product_image')[0].files[0];
+
+
+
         let data = {
             product_name,
             category_id,
@@ -215,6 +218,7 @@ $(document).ready(function(){
             url = url+ "/edit/"+id;
             formData.append("id",id);
         }
+
        
         // postData(url,data);
         
@@ -239,6 +243,7 @@ $(document).ready(function(){
         $('#product_price').val(product_price);
         $('#category_id').val(category_id);
         $('#product_desc').val(product_desc);
+        productDescEditor.setData(product_desc);
         
         $('#previewImg').attr('src',baseUrl+'/img/products/'+product_image)
     });

@@ -42,7 +42,7 @@ $routes->group('admin',['filter' => 'auth'] ,function ($routes) {
     $routes->get('/','Admin/Product::index');
     $routes->get('product', 'Admin\Product::index');
     $routes->post('product', 'Admin\Product::store');
-    $routes->post('product/edit/(:id)', 'Admin\Product::store');
+    $routes->post('product/edit/(:id)', 'Admin\Product::edit');
     $routes->get('product/delete/(:id)', 'Admin\Product::delete');
 
     $routes->get('category', 'Admin\Category::index');

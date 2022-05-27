@@ -52,7 +52,7 @@ class Category extends BaseController
     public function edit($id){
         $validation =  \Config\Services::validation();
         $validation->setRules([
-            'category_name' => ['label'=>'Category Name','rules'=>'required|is_unique[categories.category_name]']
+            'category_name' => ['label'=>'Category Name','rules'=>'required']
         ]);
         $response;
         $isDataValid = $validation->withRequest($this->request)->run();
@@ -68,7 +68,19 @@ class Category extends BaseController
             ];
 
             $productsModel = new CategoryModel;
-            $productsModel->update($id,$data);
+            try {
+                //code...
+                $productsModel->update($id,$data);
+            } catch (\Throwable $th) {
+                //throw $th;
+                
+                $response = [
+                    "status" => false,
+                    "message" => "Failed Update Category",
+                    "data" => $productsModel->errors()
+                ];
+                
+            }
         }else{
             $response = [
                 "status" => false,

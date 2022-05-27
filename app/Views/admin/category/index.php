@@ -1,7 +1,7 @@
     <?= $this->extend('admin/layouts/layout') ?>
     <?= $this->section('content') ?>
 
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary btn-sm my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Add Categories
         </button>
 
@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <?php
-                    foreach($categories as $category){
+                    foreach($categories as $key=>$category){
                 ?>
                     <tr>
                         <td><?= $category['id'] ;?></td>

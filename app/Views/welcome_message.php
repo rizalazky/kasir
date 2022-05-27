@@ -15,40 +15,22 @@
     </div>
     </nav>
     <div class="container-fluid">
-        <h2 class="h2">Products</h2>
+        <h3 class="h3">Products</h3>
         <div class="d-flex flex-wrap justify-content-center">
-            <div class="card m-2" style="width: 18rem;">
-                <img src="<?php echo base_url('/img/products/paket-advance.png')?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Majoo Advance</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+            <?php foreach ($products as $product) : ?>
+                <div class="card m-2" style="width: 25rem;">
+                    <img src="<?php echo base_url('/img/products/'.$product['product_image'])?>" class="card-img-top img-fluid" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $product['product_name'];?></h5>
+                        <p class="card-text"><?php echo $product['product_desc'];?></p>
+                        
+                    </div>
+                    <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Order</a>
+                    </div>
                 </div>
-            </div>
-            <div class="card m-2" style="width: 18rem;">
-                <img src="<?php echo base_url('/img/products/paket-desktop.png')?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Majoo Desktop</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card m-2" style="width: 18rem;">
-                <img src="<?php echo base_url('/img/products/paket-lifestyle.png')?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Mojoo Lifestyle</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card m-2" style="width: 18rem;">
-                <img src="<?php echo base_url('/img/products/standard_repo.png')?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Majoo Pro</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
+            <?php endforeach ; ?>
+            
             
         </div>
     </div>

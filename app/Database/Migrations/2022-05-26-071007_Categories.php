@@ -18,7 +18,7 @@ class Categories extends Migration
                 'category_name'      => [
                     'type'           => 'VARCHAR',
                     'constraint'     => 100,
-                    'default'        => '',
+                    'unique'		 => true
                 ]
             ]);
 

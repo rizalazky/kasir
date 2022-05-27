@@ -7,6 +7,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                <input type="hidden" name="" id="id">
+                <img id="previewImg" class="img-fluid mx-auto d-block" src="" alt="your image" /></br></br>
+                <!-- <input type="file" name="file" multiple="true" accept="image/*" id="finput" onchange="readURL(this);"></br></br> -->
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Product Name</label>
                     <input type="text" class="form-control" id="product_name" placeholder="">
@@ -14,9 +20,10 @@
                 <div class="mb-3">
                     <label for="category_id" class="form-label">Category</label>
                     <select name="category_id" id="category_id" class="select-2 form-select">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="">-- Select Category --</option>
+                        <?php foreach ($categories as $category) { ?>
+                            <option value="<?= $category['id'] ?>"><?= $category['category_name'] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -27,9 +34,7 @@
                     <label for="exampleFormControlInput1" class="form-label">Price</label>
                     <input type="text" class="form-control" id="product_price" placeholder="">
                 </div>
-                <img id="previewImg" class="img-fluid" src="//www.tutsmake.com/ajax-image-upload-with-preview-in-codeigniter/" alt="your image" /></br></br>
-                <!-- <input type="file" name="file" multiple="true" accept="image/*" id="finput" onchange="readURL(this);"></br></br> -->
-
+                
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Image</label>
                     <input type="file" class="form-control" accept="image/*" id="product_image" placeholder="">

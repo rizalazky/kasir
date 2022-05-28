@@ -1,0 +1,12 @@
+1.run project 
+    - php spark serve
+2.migrasi database
+    - create database (db_pos_majoo)
+    - php spark migrate:refresh
+3.run seeder for user
+    - php spark seed UserSeeder
+4.Url halaman admin
+    - http://localhost:8080/admin
+    - username = admin (based on seeder)
+    - password = 12345 (based on seeder)
+5.Thankyou...

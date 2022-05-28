@@ -22,6 +22,7 @@
                     <img src="<?php echo base_url('/img/products/'.$product['product_image'])?>" style="height:300px;object-fit:contain;" class="card-img-top img-fluid img-thumbnail" alt="...">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $product['product_name'];?></h5>
+                        <h5 class="h6">Rp. <?php echo number_format($product['product_price']);?></h5>
                         <p class="card-text"><?php echo $product['product_desc'];?></p>
                         
                     </div>

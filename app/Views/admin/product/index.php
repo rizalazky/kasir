@@ -25,15 +25,15 @@
                         <td><?= $product->id; ?></td>
                         <td><?= $product->product_name ;?></td>
                         <td><?= $product->category_name ;?></td>
-                        <td><?= $product->product_price ;?></td>
-                        <td><?= $product->product_desc ;?></td>
+                        <td><?= number_format($product->product_price) ;?></td>
+                        <td style="width:400px;"><?= $product->product_desc ;?></td>
                         <td>
                             <button 
                             class='btn btn-primary btn-sm btn-edit-product'
                             data-id='<?= $product->id ;?>'
                             data-product_name='<?= $product->product_name ;?>'
                             data-category_id='<?= $product->category_id ;?>'
-                            data-product_price='<?= $product->product_price ;?>'
+                            data-product_price='<?php echo number_format($product->product_price);?>'
                             data-product_desc='<?= $product->product_desc ;?>'
                             data-product_image='<?= $product->product_image ;?>'
                             data-bs-toggle="modal" data-bs-target="#exampleModal"

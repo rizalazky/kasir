@@ -1,28 +1,102 @@
 $(document).ready(function(){
+    const elementTypeDecimal=document.getElementsByClassName('decimal-input')
+
     
+    // function formatNumber(number,format){
+    //     return numeral(number).format(format);
+    // }
+
+    function formatNumber(angka,prefix){
+        // angka=angka.replace('.',',');
+        
+
+        var number_string = angka.replace(/[^.\d]/g, '').toString(),
+        split   		= number_string.split('.'),
+        sisa     		= split[0].length % 3,
+        rupiah     		= split[0].substr(0, sisa),
+        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+            separator = sisa ? ',' : '';
+            rupiah += separator + ribuan.join(',');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + '.' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ?  rupiah : '');
+    }
+
+    function initDecimalInput(){
+        for (let index = 0; index < elementTypeDecimal.length; index++) {
+            const elm = elementTypeDecimal[index];
+            var val=elm.value ? elm.value : elm.innerText;
+            console.log(elm)
+            if(val){
+                var format=formatNumber(val);
+                try {
+                    // type input
+                    elm.value=format
+                } catch (error) {
+                    // !type input
+                    elm.innerText=format
+                    
+                }
+            }
+        }
+    }
+
+    if(elementTypeDecimal.length > 0){
+        initDecimalInput()
+    }
+
+    $('.decimal-input').on('keyup',function(e){
+        var string = formatNumber($(this).val());
+        $(this).val(string);
+    });
 
     // reset form input when modal closed
     $('#exampleModal').on('hidden.bs.modal',function(){
         console.log("Hide Modal")
-        $('input').val();
+        $("#category_id option:selected").prop("selected", false)
         let inputElement = document.getElementsByTagName('input');
 
-        console.log(inputElement);
+       
         for (let index = 0; index < inputElement.length; index++) {
             const inp = inputElement[index];
             inp.value = '';
         }
+        productDescEditor.setData("")
+        $('#previewImg').attr('src','');
+        $('#myprogress').addClass('d-none');
+    });
+
+    function previewImageDisplay(){
+        let src=$('#previewImg').attr('src');
+
+        
+        if(src){
+            console.log('Masuk')
+            $('#previewImg').removeClass('d-none');
+        }else{
+            console.log('Masuk Else')
+            $('#previewImg').addClass('d-none');
+        }
+    }
+
+    $('#exampleModal').on('shown.bs.modal',function(){
+        previewImageDisplay();
     })
 
 
     function previewImage(){
         var file = $("#product_image").get(0).files[0];
-
+        
         if(file){
             var reader = new FileReader();
 
             reader.onload = function(){
                 $("#previewImg").attr("src", reader.result);
+                previewImageDisplay();
             }
 
             reader.readAsDataURL(file);
@@ -33,45 +107,14 @@ $(document).ready(function(){
         previewImage();
     })
     
-    function matchStart(params, data) {
-        // If there are no search terms, return all of the data
-        if ($.trim(params.term) === '') {
-            return data;
-        }
-
-        // Skip if there is no 'children' property
-        if (typeof data.children === 'undefined') {
-            return null;
-        }
-
-        // `data.children` contains the actual options that we are matching against
-        var filteredChildren = [];
-        $.each(data.children, function (idx, child) {
-            if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
-            filteredChildren.push(child);
-            }
-        });
-
-        // If we matched any of the timezone group's children, then set the matched children on the group
-        // and return the group object
-        if (filteredChildren.length) {
-            var modifiedData = $.extend({}, data, true);
-            modifiedData.children = filteredChildren;
-
-            // You can return modified objects from here
-            // This includes matching the `children` how you want in nested data sets
-            return modifiedData;
-        }
-
-        // Return `null` if the term should not be displayed
-        return null;
-    }
 
     // $('.select-2').select2({
-    //     matcher: matchStart
+    //     matcher: matchCustom
     // });
 
+
     function saveProduct(url,data){
+        $("#myprogress").removeClass('d-none');
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();         
@@ -133,9 +176,6 @@ $(document).ready(function(){
         
     }
     
-
-    
-
     function postData(url,data){
         $.ajax({
             type: "POST",

@@ -95,7 +95,7 @@ class Product extends BaseController
             // return json_encode($uploadImage['name_file']);
             $data =[
                 "product_name" =>$this->request->getPost("product_name"),
-                "product_price" =>$this->request->getPost("product_price"),
+                "product_price" =>str_replace(',','', $this->request->getPost("product_price")),
                 "product_desc" =>$this->request->getPost("product_desc"),
                 "category_id" =>$this->request->getPost("category_id"),
                 "category_id" =>$this->request->getPost("category_id"),
@@ -121,6 +121,7 @@ class Product extends BaseController
         return json_encode($response);
     }
 
+
     public function edit($id){
         $validation =  \Config\Services::validation();
         $validation->setRules([
@@ -135,7 +136,7 @@ class Product extends BaseController
 
             $data =[
                 "product_name" =>$this->request->getPost("product_name"),
-                "product_price" =>$this->request->getPost("product_price"),
+                "product_price" =>str_replace(',','', $this->request->getPost("product_price")),
                 "product_desc" =>$this->request->getPost("product_desc"),
                 "category_id" =>$this->request->getPost("category_id"),
             ];
@@ -182,44 +183,6 @@ class Product extends BaseController
         return json_encode($response);
     }
 
-    public function update(){
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'product_name' => ['label'=>'Product Name','rules'=>'required|is_unique[products.product_name]'],
-            'product_price' => ['label'=>'Product Price','rules'=>'required'],
-            'product_desc' => ['label'=>'Product Description','rules'=>'required'],
-            'category_id' => ['label'=>'Category','rules'=>'required'],
-        ]);
-        $response;
-        $isDataValid = $validation->withRequest($this->request)->run();
-        if($isDataValid){
-            $data =[
-                "product_name" =>$this->request->getPost("product_name"),
-                "product_price" =>$this->request->getPost("product_price"),
-                "product_desc" =>$this->request->getPost("product_desc"),
-                "category_id" =>$this->request->getPost("category_id")
-            ];
-
-            
-
-            $productsModel = new ProductModel;
-            $productsModel->save($data);
-
-            $response = [
-                "status" => true,
-                "message" => "Succes Create Product",
-                "data" => $data
-            ];
-        }else{
-            $response = [
-                "status" => false,
-                "message" => "Failed Create Product",
-                "data" => $validation->getErrors()
-            ];
-        }
-        
-        return json_encode($response);
-    }
 
     public function delete($id){
         $productsModel = new ProductModel();
